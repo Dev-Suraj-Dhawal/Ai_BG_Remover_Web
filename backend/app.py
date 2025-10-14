@@ -1,6 +1,6 @@
 # backend/app.py
 import os
-from flask import Flask, request, send_file, jsonify, after_this_request
+from flask import Flask, render_template, request, send_file, jsonify, after_this_request
 from rembg import remove, new_session
 import io
 from werkzeug.utils import secure_filename
@@ -81,6 +81,12 @@ def remove_bg():
     except Exception as e:
         app.logger.error(f"Error processing image: {e}")
         return jsonify({'error': 'Failed to process image'}), 500
+# Define a route for the homepage (the root URL '/')
+@app.route('/frontend')
+def index():
+    # Use render_template to find and serve index.html 
+    # from the 'templates' directory
+    return render_template('index.html')
 
 if __name__ == '__main__':
     debug_mode = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
