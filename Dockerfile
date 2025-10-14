@@ -19,6 +19,10 @@ COPY backend/requirements.txt /app/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+# Download the model during build
+COPY download_model.py /app/
+RUN python download_model.py
+
 # Copy backend source code
 COPY backend/app.py /app/app.py
 
