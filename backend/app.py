@@ -51,7 +51,7 @@ def set_security_headers(response):
     response.headers['Permissions-Policy'] = 'geolocation=(), microphone=()'
     return response
 
-@app.route('/')
+@app.route('/health')
 def health():
     app.logger.info("Health check endpoint called")
     return jsonify({'status': 'ok'})
@@ -81,10 +81,11 @@ def remove_bg():
     except Exception as e:
         app.logger.error(f"Error processing image: {e}")
         return jsonify({'error': 'Failed to process image'}), 500
+
 # Define a route for the homepage (the root URL '/')
-@app.route('/frontend')
+@app.route('/')
 def index():
-    # Use render_template to find and serve index.html 
+    # Use render_template to find and serve index.html
     # from the 'templates' directory
     return render_template('index.html')
 

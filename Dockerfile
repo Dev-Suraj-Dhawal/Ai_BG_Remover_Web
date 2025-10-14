@@ -20,7 +20,7 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Copy backend source code
-COPY backend /app/backend
+COPY backend/app.py /app/app.py
 
 # Copy frontend files
 COPY frontend /app/frontend
@@ -29,9 +29,9 @@ COPY frontend /app/frontend
 EXPOSE 5000
 
 # Set environment variables for Flask
-ENV FLASK_APP=backend/app.py
+ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=5000
 
 # Run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "backend.app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
