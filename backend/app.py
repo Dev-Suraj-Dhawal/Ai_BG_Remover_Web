@@ -10,7 +10,7 @@ from flask_limiter.util import get_remote_address
 import logging
 from logging.handlers import RotatingFileHandler
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='frontend')
 CORS(app)
 
 # Rate limiter to prevent abuse
