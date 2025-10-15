@@ -58,17 +58,15 @@ app.logger.info(f'Base directory: {BASE_DIR}')
 app.logger.info(f'Template folder: {app.template_folder}')
 app.logger.info(f'Static folder: {app.static_folder}')
 
-# Initialize model session at startup to ensure app is ready for health checks
-# Using 'u2net' for faster loading and lower RAM usage while maintaining good accuracy
-app.logger.info('Initializing rembg session...')
-try:
-    _session = new_session('u2net')
-    app.logger.info('Session initialized successfully')
-except Exception as e:
-    app.logger.error(f'Failed to initialize rembg session: {e}')
-    raise
+# Initialize model session lazily to avoid startup delays
+_session = None
 
 def get_session():
+    global _session
+    if _session is None:
+        app.logger.info('Initializing rembg session...')
+        _session = new_session('u2net')
+        app.logger.info('Session initialized successfully')
     return _session
 
 # Security headers
