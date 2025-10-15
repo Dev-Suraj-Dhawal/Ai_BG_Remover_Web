@@ -52,9 +52,7 @@ function handleFile(file) {
   const formData = new FormData();
   formData.append('image', file);
 
-  // Use configurable backend URL or default to localhost
-  const backendUrl = window.BACKEND_URL || 'http://localhost:5000';
-  fetch(`${backendUrl}/remove`, {
+  fetch('/remove', {
     method: 'POST',
     body: formData
   })

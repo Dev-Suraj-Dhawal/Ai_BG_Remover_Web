@@ -1,23 +1,23 @@
-# TODO List for Upgrading AI BG Remover to Industry-Grade Standards
+# TODO List for Render Deployment Fixes
 
-## Backend Improvements
-- [x] Add environment-based configuration (production vs development)
-- [x] Disable debug mode in production
-- [x] Add security headers (CSP, X-Content-Type-Options, etc.)
-- [x] Improve logging configuration
-- [x] Add rate limiting to prevent abuse
-- [x] Use environment variables for config (port, debug, etc.)
+## Backend Restructuring
+- [x] Move app.py from backend/ to root directory
+- [x] Move requirements.txt from backend/ to root directory
+- [x] Update app.py paths for template_folder and static_folder (now relative to root)
+- [x] Adjust logging directory for production (use /tmp/logs on Render)
 
-## Frontend Improvements
-- [x] Make backend URL configurable via environment variable
+## Frontend Fixes
+- [x] Update logic.js to use relative URL '/remove' instead of configurable backend URL
 
-## Deployment
-- [x] Add Dockerfile for containerized deployment
-- [x] Update README with deployment instructions
+## Testing Fixes
+- [x] Fix test_backend.py: health endpoint is '/health', not '/'
+- [x] Update import in test_backend.py to 'from app import app'
 
-## Testing
-- [x] Add basic backend tests using pytest
-- [x] Add test requirements
+## Deployment Files
+- [x] Update Dockerfile to copy app.py and requirements.txt from root
+- [x] Add Procfile for Render (non-Docker deployment)
+- [x] Update README.md with Render-specific deployment instructions
 
 ## Documentation
-- [x] Update README with environment variables, deployment, and usage instructions
+- [x] Update README with Render deployment steps
+- [x] Update local run instructions to use root files

@@ -10,7 +10,7 @@ This project provides an AI-powered background remover with a Flask backend and 
 
 - `FLASK_DEBUG`: Set to `true` to enable debug mode (default: `false`).
 - `PORT`: Port number for the backend server (default: `5000`).
-- `BACKEND_URL`: URL of the backend server for the frontend (default: `http://localhost:5000`).
+- `RENDER`: Set to any value to enable production logging to `/tmp/logs` (automatically set by Render).
 
 ### Running Locally
 
@@ -24,7 +24,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 2. Install dependencies:
 
 ```bash
-pip install -r backend/requirements.txt
+pip install -r requirements.txt
 ```
 
 3. Run the backend server:
@@ -32,7 +32,7 @@ pip install -r backend/requirements.txt
 ```bash
 export FLASK_DEBUG=false
 export PORT=5000
-python backend/app.py
+python app.py
 ```
 
 4. Open `frontend/index.html` in a browser.
@@ -59,10 +59,21 @@ Run backend tests with pytest:
 pytest tests/
 ```
 
+### Deploying to Render
+
+1. Connect your GitHub repository to Render.
+2. Create a new Web Service.
+3. Set the following:
+   - **Runtime**: Python 3
+   - **Build Command**: `pip install -r requirements.txt && python download_model.py`
+   - **Start Command**: `gunicorn --bind 0.0.0.0:$PORT app:app`
+4. Add environment variables if needed (e.g., `FLASK_DEBUG=false`).
+5. Deploy!
+
 ## Notes
 
 - The backend includes rate limiting to prevent abuse.
 - Security headers are set for improved security.
-- Frontend backend URL is configurable via `window.BACKEND_URL` variable.
+- Frontend uses relative URLs for same-origin requests.
 - Max upload size is 10MB.
 - Supported image formats: PNG, JPG, JPEG, WEBP.

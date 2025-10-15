@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY backend/requirements.txt /app/
+COPY requirements.txt /app/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
@@ -24,7 +24,7 @@ COPY download_model.py /app/
 RUN python download_model.py
 
 # Copy backend source code
-COPY backend/app.py /app/app.py
+COPY app.py /app/app.py
 
 # Copy frontend files
 COPY frontend /app/frontend

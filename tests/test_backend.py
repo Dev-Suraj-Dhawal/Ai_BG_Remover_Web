@@ -1,6 +1,6 @@
 import io
 import pytest
-from backend.app import app
+from app import app
 
 @pytest.fixture
 def client():
@@ -9,7 +9,7 @@ def client():
         yield client
 
 def test_health(client):
-    rv = client.get('/')
+    rv = client.get('/health')
     assert rv.status_code == 200
     json_data = rv.get_json()
     assert json_data['status'] == 'ok'
