@@ -58,15 +58,12 @@ app.logger.info(f'Base directory: {BASE_DIR}')
 app.logger.info(f'Template folder: {app.template_folder}')
 app.logger.info(f'Static folder: {app.static_folder}')
 
-# Initialize model session lazily to avoid startup delays
-_session = None
+# Initialize model session at startup to ensure app is ready for health checks
+app.logger.info('Initializing rembg session...')
+_session = new_session('isnet-general-use')
+app.logger.info('Session initialized successfully')
 
 def get_session():
-    global _session
-    if _session is None:
-        app.logger.info('Initializing rembg session...')
-        _session = new_session('isnet-general-use')
-        app.logger.info('Session initialized successfully')
     return _session
 
 # Security headers
@@ -95,7 +92,6 @@ def remove_bg():
         return jsonify({'error': 'Invalid file type'}), 400
     data = f.read()
     try:
-        # Get or initialize session lazily
         session = get_session()
         out_bytes = remove(data, session=session)
         
