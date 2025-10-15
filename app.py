@@ -60,8 +60,12 @@ app.logger.info(f'Static folder: {app.static_folder}')
 
 # Initialize model session at startup to ensure app is ready for health checks
 app.logger.info('Initializing rembg session...')
-_session = new_session('isnet-general-use')
-app.logger.info('Session initialized successfully')
+try:
+    _session = new_session('isnet-general-use')
+    app.logger.info('Session initialized successfully')
+except Exception as e:
+    app.logger.error(f'Failed to initialize rembg session: {e}')
+    raise
 
 def get_session():
     return _session
