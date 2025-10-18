@@ -7,3 +7,4 @@ onnxruntime
 pytest
 gunicorn
 Werkzeug>=3.0.0
+psutil

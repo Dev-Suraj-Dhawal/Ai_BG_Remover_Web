@@ -65,10 +65,12 @@ pytest tests/
 2. Create a new Web Service.
 3. Set the following:
    - **Runtime**: Python 3
-   - **Build Command**: `pip install -r requirements.txt && python download_model.py`
-   - **Start Command**: `gunicorn --bind 0.0.0.0:$PORT app:app`
+   - **Build Command**: `chmod +x build.sh && ./build.sh`
+   - **Start Command**: `gunicorn -c gunicorn_config.py app:app`
 4. Add environment variables if needed (e.g., `FLASK_DEBUG=false`).
 5. Deploy!
+
+The build script pre-downloads the AI model (~176MB) during build time to ensure fast startup and avoid 502 errors.
 
 ## Notes
 
