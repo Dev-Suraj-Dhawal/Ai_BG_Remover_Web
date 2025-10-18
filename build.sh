@@ -1,7 +1,4 @@
 #!/bin/bash
-# Build script for AI Background Remover Web App
-# Pre-downloads the rembg model during build to avoid startup delays on Render
-
 set -e  # Exit on any error
 
 echo "========================================="
@@ -14,8 +11,6 @@ pip install -r requirements.txt
 
 echo ""
 echo "Step 2: Pre-downloading rembg u2net model..."
-echo "This will cache the model (~176MB) to avoid startup delays on Render"
-
 python3 << 'END'
 from rembg import new_session
 import sys
@@ -30,8 +25,6 @@ except Exception as e:
     sys.exit(1)
 END
 
-echo ""
 echo "========================================="
 echo "Build completed successfully!"
-echo "Model is ready for instant startup."
 echo "========================================="
